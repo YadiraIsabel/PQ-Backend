@@ -1,14 +1,23 @@
 import mongoose, { Mongoose } from "mongoose";
 
 
-const storeSchema = new mongoose.Schema({
+const countSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
     },
+    total: {
+        type: Number,
+        required: true
+    },
+    totalin: {
+        type: Number,
+        default: 0.0,
+        required: false
+    },
     date: {
         type: String,
-        default: 2023,
+        default: "2023-11-12",
         required: false
     },
     user: {
@@ -23,4 +32,4 @@ const storeSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export default mongoose.model('Store', storeSchema)
+export default mongoose.model('Count', countSchema)

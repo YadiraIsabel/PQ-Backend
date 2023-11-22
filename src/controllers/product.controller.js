@@ -2,8 +2,7 @@ import Product from '../models/product.models.js'
 
 export const getProducts = async (req, res) => {
     try {
-
-        const products = await Product.find({store: req.store.id}).populate('store')
+        const products = await Product.find({store: req.params.tienda}).populate('store')
         res.json(products)
 
         
@@ -16,12 +15,12 @@ export const getProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
 
     try {
-        const {name, price, year} = req.body
+        const {name, price, fecha} = req.body
         const newProduct = new Product ({
             name,
             price,
-            year,
-            store: req.store.id
+            fecha,
+            store: req.params.tienda
         })
 
         const savedProduct = await newProduct.save();
@@ -36,7 +35,7 @@ export const createProduct = async (req, res) => {
 export const getProduct = async (req, res) => {
 
     try {
-        const product = await Product.findById(req.params.id).populate('store')
+        const product = await Product.findById(req.params.tienda).populate('store')
         res.json(product)
         
         if (!product)

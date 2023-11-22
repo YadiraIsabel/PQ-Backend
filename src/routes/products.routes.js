@@ -6,11 +6,11 @@ import { productSchema } from "../schemas/product.schemas.js";
 
 const router = Router()
 
-router.get('/productos', authRequired, getProducts)
-router.post('/productos', authRequired, validateSchema(productSchema), createProduct)
-router.get('/productos/:id', authRequired, getProduct)
-router.delete('/productos/:id', authRequired, deleteProduct)
-router.put('/productos/:id', authRequired, validateSchema(productSchema), updateProduct)
+router.get('/:tienda/productos', authRequired, getProducts)
+router.post('/:tienda/productos', authRequired, validateSchema(productSchema), createProduct)
+router.get('/:tienda/productos/:id', authRequired, getProduct)
+router.delete('/:tienda/productos/:id', authRequired, deleteProduct)
+router.put('/:tienda/productos/:id', authRequired, validateSchema(productSchema), updateProduct)
 
 
 export default router;

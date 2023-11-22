@@ -16,10 +16,10 @@ export const getStores = async (req, res) => {
 export const createStore = async (req, res) => {
 
     try {
-        const {name, year} = req.body
+        const {name, date} = req.body
         const newStore = new Store ({
             name,
-            year,
+            date,
             user: req.user.id
         })
 
@@ -35,7 +35,7 @@ export const createStore = async (req, res) => {
 export const getStore = async (req, res) => {
 
     try {
-        const store = await store.findById(req.params.id).populate('user')
+        const store = await Store.findById(req.params.id).populate('user')
         res.json(store)
         
         if (!store)
@@ -52,7 +52,7 @@ export const deleteStore = async (req, res) => {
     try {
 
         //const store = await store.findByIdAndRemove(req.param.id)
-        const store = await store.findByIdAndDelete(req.params.id)
+        const store = await Store.findByIdAndDelete(req.params.id)
         res.json(store)
         
         if (!store)
@@ -67,7 +67,7 @@ export const deleteStore = async (req, res) => {
 export const updateStore = async (req, res) => {
 
     try {
-        const store = await store.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const store = await Store.findByIdAndUpdate(req.params.id, req.body, {new: true})
         res.json(store)
         
         if (!store)

@@ -11,8 +11,8 @@ const productSchema = new mongoose.Schema({
         default: 0.0,
         required: false
     },
-    year: {
-        type: Number,
+    fecha: {
+        type: String,
         default: 2023,
         required: false
     },

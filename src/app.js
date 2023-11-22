@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import authRoutes from "./routes/auth.routes.js";
 import productRouters from './routes/products.routes.js';
 import storeRouters from './routes/store.routes.js';
+import countRouters from './routes/count.routes.js';
 import cookieParser from 'cookie-parser'
 import cors from 'cors';
 
@@ -18,6 +19,7 @@ app.use(cookieParser())
 app.use('/PQ/', authRoutes)
 app.use('/PQ/', productRouters);
 app.use('/PQ/', storeRouters);
+app.use('/PQ/', countRouters);
 
 
 export default app;
