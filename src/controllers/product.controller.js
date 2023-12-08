@@ -45,7 +45,6 @@ export const deleteProduct = async (req, res) => {
 
     try {
 
-        //const product = await Product.findByIdAndRemove(req.param.id)
         const product = await deleteProductById(req)
         res.json(product)
         
