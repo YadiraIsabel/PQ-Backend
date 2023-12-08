@@ -1,9 +1,11 @@
 import Store from '../models/store.models.js'
+import {getStoresByUser, getStoreById, createAStore, deleteStoreById, updateStoreById} from '../app/services/store.service.js'
+
 
 export const getStores = async (req, res) => {
     try {
 
-        const stores = await Store.find({user: req.user.id}).populate('user')
+        const stores = await getStoresByUser(req)
         res.json(stores)
 
         
@@ -16,14 +18,7 @@ export const getStores = async (req, res) => {
 export const createStore = async (req, res) => {
 
     try {
-        const {name, date} = req.body
-        const newStore = new Store ({
-            name,
-            date,
-            user: req.user.id
-        })
-
-        const savedStore = await newStore.save();
+        const savedStore = await createAStore(req);
         res.json(savedStore)
         
     } catch (error) {
@@ -35,7 +30,7 @@ export const createStore = async (req, res) => {
 export const getStore = async (req, res) => {
 
     try {
-        const store = await Store.findById(req.params.id).populate('user')
+        const store = await getStoreById(req)
         res.json(store)
         
         if (!store)
@@ -52,7 +47,7 @@ export const deleteStore = async (req, res) => {
     try {
 
         //const store = await store.findByIdAndRemove(req.param.id)
-        const store = await Store.findByIdAndDelete(req.params.id)
+        const store = await deleteStoreById(req)
         res.json(store)
         
         if (!store)
@@ -67,7 +62,7 @@ export const deleteStore = async (req, res) => {
 export const updateStore = async (req, res) => {
 
     try {
-        const store = await Store.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const store = await updateStoreById(req, res)
         res.json(store)
         
         if (!store)

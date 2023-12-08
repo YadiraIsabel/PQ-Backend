@@ -1,15 +1,17 @@
-import Count from '../models/count.models.js'
+import {getCountsByUser, getCountById, createACount, deleteCountById, updateCountById} from '../app/services/count.service.js'
 
 export const getCounts = async (req, res) => {
     try {
 
-        const counts = await Count.find({user: req.user.id}).populate('user')
+        const counts = await getCountsByUser(req)
+        /* console.log(counts); */
         res.json(counts)
+        return (res)
 
         
     } catch (error) {
         console.log(error);
-        res.status(500).json ({message:[ 'Error al obtener las cuentas']})
+       return res.status(500).json ({message:[ 'Error al obtener las cuentas']})
     }
 }
 
@@ -17,16 +19,8 @@ export const createCount = async (req, res) => {
     /* console.log(JSON.stringify(req.body)); */
 
     try {
-        const {name, date,total, totalin} = req.body
-        const newCount = new Count ({
-            name,
-            date,
-            total,
-            totalin,
-            user: req.user.id
-        })
 
-        const savedCount = await newCount.save();
+        const savedCount = await createACount(req);
         res.json(savedCount)
         
     } catch (error) {
@@ -38,7 +32,7 @@ export const createCount = async (req, res) => {
 export const getCount = async (req, res) => {
 
     try {
-        const count = await Count.findById(req.params.id).populate('user')
+        const count = await getCountById(req)
         res.json(count)
         
         if (!count)
@@ -55,7 +49,7 @@ export const deleteCount = async (req, res) => {
     try {
 
         //const count = await count.findByIdAndRemove(req.param.id)
-        const count = await Count.findByIdAndDelete(req.params.id)
+        const count = await deleteCountById(req)
         res.json(count)
         
         if (!count)
@@ -70,7 +64,7 @@ export const deleteCount = async (req, res) => {
 export const updateCount = async (req, res) => {
 
     try {
-        const count = await Count.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const count = await updateCountById(req)
         res.json(count)
         
         if (!count)

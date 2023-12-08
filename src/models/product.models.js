@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
     },
     fecha: {
         type: String,
-        default: 2023,
+        default: "01-01-2023",
         required: false
     },
     store: {

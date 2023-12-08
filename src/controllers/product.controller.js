@@ -1,8 +1,10 @@
 import Product from '../models/product.models.js'
+import {getProductsByStore, getProductById, createAProduct, deleteProductById, updateProductById} from '../app/services/product.service.js'
+
 
 export const getProducts = async (req, res) => {
     try {
-        const products = await Product.find({store: req.params.tienda}).populate('store')
+        const products = await getProductsByStore(req)
         res.json(products)
 
         
@@ -15,15 +17,7 @@ export const getProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
 
     try {
-        const {name, price, fecha} = req.body
-        const newProduct = new Product ({
-            name,
-            price,
-            fecha,
-            store: req.params.tienda
-        })
-
-        const savedProduct = await newProduct.save();
+        const savedProduct = await createAProduct(req);
         res.json(savedProduct)
         
     } catch (error) {
@@ -35,7 +29,7 @@ export const createProduct = async (req, res) => {
 export const getProduct = async (req, res) => {
 
     try {
-        const product = await Product.findById(req.params.tienda).populate('store')
+        const product = await getProductById(req)
         res.json(product)
         
         if (!product)
@@ -52,7 +46,7 @@ export const deleteProduct = async (req, res) => {
     try {
 
         //const product = await Product.findByIdAndRemove(req.param.id)
-        const product = await Product.findByIdAndDelete(req.params.id)
+        const product = await deleteProductById(req)
         res.json(product)
         
         if (!product)
@@ -67,7 +61,7 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
 
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const product = await updateProductById(req)
         res.json(product)
         
         if (!product)
